@@ -1,0 +1,44 @@
+﻿
+@model GestorEnergetico.ViewModel.CategoriaViewModel
+
+@{
+    ViewData["Title"] = "Deletar";
+}
+
+<h3>Você tem certeza que deseja excluir?</h3>
+<div>
+    <h4>Categoria</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(modelItem => modelItem.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(modelItem => modelItem.Descricao)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CategoriaPaiId)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.CategoriaPaiId != null)
+            {
+                @Html.DisplayFor(modelItem => modelItem.CategoriaPaiId)
+            }
+            else
+            {
+                <p>Não possui categoria pai</p>
+            }
+        </dd>
+    </dl>
+    <form asp-action="Deletar">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Voltar</a>
+    </form>
+</div>

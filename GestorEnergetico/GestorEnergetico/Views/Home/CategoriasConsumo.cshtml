@@ -1,0 +1,32 @@
+﻿@model IEnumerable<GestorEnergetico.Models.Dto.CategoriasConsumoDto>
+
+@{
+    ViewData["Title"] = "Categorias que mais consome";
+}
+
+
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                Nome da Categoria
+            </th>
+            <th>
+                Total Watts / Mês
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomeCategoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantidadeConsumoMensal)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

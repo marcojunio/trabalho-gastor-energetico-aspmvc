@@ -1,0 +1,69 @@
+﻿@model IEnumerable<GestorEnergetico.ViewModel.ItemViewModel>
+
+@{
+    ViewData["Title"] = "Itens";
+}
+<h1>Itens Cadastrados</h1>
+
+<div class="d-flex align-content-lg-start justify-content-between">
+    <p>
+        <a asp-action="Criar">Novo</a> |
+        <a asp-controller="Home" asp-action="Index">Voltar</a>
+    </p>
+</div>
+
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HorasUsoDiario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataFabricacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConsumoWatts)
+            </th>
+            <th>
+               Categoria
+            </th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorasUsoDiario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFabricacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsumoWatts)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.Descricao)
+            </td>
+            <td>
+                <a asp-action="Detalhe" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-action="Deletar" asp-route-id="@item.Id">Deletar</a> |
+                <a asp-action="Editar" asp-route-id="@item.Id">Editar</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

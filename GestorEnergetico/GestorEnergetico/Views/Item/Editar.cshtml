@@ -1,0 +1,49 @@
+﻿@model GestorEnergetico.ViewModel.ItemViewModel
+@{
+    ViewData["Title"] = "Editar Item";
+}
+
+<h1>Editar Item</h1>
+
+<h4>Dados do Item</h4>
+<hr />
+<div class="row">
+    <form method="post" asp-action="Editar">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputDate" asp-for="HorasUsoDiario"></label>
+                <input type="number" asp-for="HorasUsoDiario" id="inputDate" class="form-control" placeholder="Hora de uso diário">
+                <span asp-validation-for="HorasUsoDiario" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputDescricao" asp-for="Descricao"></label>
+                <input type="text" class="form-control" id="inputDescricao" asp-for="Descricao" placeholder="Descrição do Item">
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Nome"></label>
+            <input type="text" asp-for="Nome" asp-valida class="form-control" id="inputName" placeholder="Nome do Item">
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-6">
+                <label for="inputConsumo" asp-for="ConsumoWatts"></label>
+                <input class="form-control" id="inputConsumo" asp-for="ConsumoWatts" type="number" placeholder="Consumo em watts do Produto">
+                <span asp-validation-for="ConsumoWatts" class="text-danger"></span>
+            </div>
+            <div class="form-group col-6">
+                <label asp-for="DataFabricacao"></label>
+                <input asp-for="DataFabricacao" type="date" class="form-control" placeholder="Data de fabricação" />
+                <span asp-validation-for="DataFabricacao" class="text-danger"></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a class="btn btn-primary" asp-action="Index">Voltar</a>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -27,7 +27,7 @@ namespace GestorEnergetico
         public void ConfigureServices(IServiceCollection services)
         {
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 25));
-            
+
             services.AddDbContext<DbContextMge>(options => options.UseMySql(Configuration.GetConnectionString("dbmge"), serverVersion));
 
             services.AddAutoMapper(typeof(Startup));

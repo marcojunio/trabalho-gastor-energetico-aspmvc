@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using GestorEnergetico.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,10 @@ namespace GestorEnergetico.Core
     {
         public static void ConfigureServicesDi(IServiceCollection services) 
         {
-           
+            services.AddTransient<CategoriaService>();
+            services.AddTransient<ItemService>();
+            services.AddTransient<ParametroService>();
+            services.AddTransient<ReportService>();
         }
     }
 }
