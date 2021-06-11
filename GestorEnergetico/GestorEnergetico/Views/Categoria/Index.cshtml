@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Atividade.ViewModel.Buffet.EventViewModel>
+
+@{
+    ViewData["Title"] = "Events";
+}
+<h1>List Events</h1>
+
+<div class="d-flex align-content-lg-start justify-content-between">
+    <p>
+        <a asp-action="Create">Create New</a> |
+        <a asp-controller="User" asp-action="Menu">Back</a>
+    </p>
+    <form asp-action="Search" class="mb-2">
+        <div class="input-group">
+            <div class="form-outline">
+                <input type="search" id="form1" name="descrition" placeholder="Descrition" class="form-control" />
+            </div>
+            <button type="submit" style="height:40px" class="btn btn-primary">
+                Search
+            </button>
+        </div>
+    </form>
+</div>
+
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Descrition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Local)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeEvent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SituationEvent)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descrition)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Client.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Local.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeEvent.Descrition)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SituationEvent.Descrition)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
