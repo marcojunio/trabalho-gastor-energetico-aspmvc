@@ -1,15 +1,26 @@
-﻿@{
+﻿@model GestorEnergetico.Models.Dto.DashboardDto
+
+@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Bem vindo</h1>
-    <h3>Acessar relatórios abaixo</h3>
-    <div class="mt-4">
-        <p>
-            <a asp-action="TotalConsumo">Total de Consumo de Energia</a> | 
-            <a asp-action="CategoriasConsumo">Categorias que mais consomem</a> | 
-            <a asp-action="ItensConsumo">Itens que mais consomem</a>
-        </p>
+<div class="row">
+    <div class="text-center col">
+        <h1 class="display-4">Bem vindo</h1>
+        <h3>Acessar relatórios abaixo</h3>
+        <div class="mt-4">
+            <p>
+                <a asp-action="TotalConsumo"> Consumo de Energia detalhado</a> |
+                <a asp-action="CategoriasConsumo">Categorias que mais consomem</a> |
+                <a asp-action="ItensConsumo">Itens que mais consomem</a>
+            </p>
+        </div>
     </div>
+    @if (Model != null)
+    {
+        <div class="col-4 bg-info" style="width:500px;color:white;border:1px;border-radius:15px">
+            <small class="text-center mb-4">Data Atual: @Model.DataAtual</small>
+            <h5 class="text-center">Total de Custo Mensal: R$@String.Format("{0:N2}", Model.TotalEmReais)</h5>
+            <h6 class="text-center">Total de kWh Mensal: @String.Format("{0:N2}", Model.TotalConsumoKwh)</h6>
+        </div>
+    }
 </div>

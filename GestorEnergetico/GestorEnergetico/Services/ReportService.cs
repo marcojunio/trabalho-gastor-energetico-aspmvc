@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace GestorEnergetico.Services
@@ -31,9 +32,9 @@ namespace GestorEnergetico.Services
                 var dataAtual = DateTime.Now;
                 var diasDoMes = DateTime.DaysInMonth(dataAtual.Year, dataAtual.Month);
 
-                itemSendoCalculado.nomeItem = item.Nome;
-                itemSendoCalculado.TotalWatts = (decimal)(item.ConsumoWatts / 1000 * item.HorasUsoDiario * diasDoMes);
-                itemSendoCalculado.ValorEmReais = (double)(itemSendoCalculado.TotalWatts * parametrosDb.ValorKwh * diasDoMes);
+                itemSendoCalculado.NomeItem = item.Nome;
+                itemSendoCalculado.TotalWatts = HelperCalculaTotalKwhDoProduto(item.ConsumoWatts, item.HorasUsoDiario, diasDoMes);
+                itemSendoCalculado.ValorEmReais = HelperCalculaValorEmReaisMensal(itemSendoCalculado.TotalWatts, parametrosDb.ValorKwh);
 
                 if (itemSendoCalculado.TotalWatts < parametrosDb.FaixaConsumoMedio)
                 {
@@ -54,6 +55,21 @@ namespace GestorEnergetico.Services
             return totalConsumoList;
         }
 
+        private double HelperCalculaValorEmReaisMensal(decimal totalWatts, decimal valorKwh)
+        {
+            var totalEmReais = (double)(totalWatts  * valorKwh);
+
+            return totalEmReais;
+        }
+
+        private decimal HelperCalculaTotalKwhDoProduto(decimal consumoWatts, int? horasUsoDiario, int diasDoMes)
+        {
+            var totalConsumoDiario = (decimal)(consumoWatts  * horasUsoDiario);
+            var total = (totalConsumoDiario * diasDoMes) / 1000;
+
+            return total;
+        }
+
         public IEnumerable<ItensConsumoDto> ItensQueMaisConsome()
         {
             var itens = _dbContext.Itens.ToList();
@@ -67,7 +83,7 @@ namespace GestorEnergetico.Services
                 var itemQueMaisConsome = new ItensConsumoDto();
 
                 itemQueMaisConsome.NomeItem = item.Nome;
-                itemQueMaisConsome.QuantidadeConsumoMensal = (decimal)(item.ConsumoWatts / 1000 * item.HorasUsoDiario * diasDoMes);
+                itemQueMaisConsome.QuantidadeConsumoMensal = HelperCalculaTotalKwhDoProduto(item.ConsumoWatts, item.HorasUsoDiario, diasDoMes);
 
                 itensQueMaisConsome.Add(itemQueMaisConsome);
             }
@@ -91,7 +107,7 @@ namespace GestorEnergetico.Services
                 var itemQueMaisConsome = new CategoriasConsumoDto();
 
                 itemQueMaisConsome.NomeCategoria = item.Categoria.Descricao;
-                itemQueMaisConsome.QuantidadeConsumoMensal += (decimal)(item.ConsumoWatts / 1000 * item.HorasUsoDiario * diasDoMes);
+                itemQueMaisConsome.QuantidadeConsumoMensal += HelperCalculaTotalKwhDoProduto(item.ConsumoWatts, item.HorasUsoDiario, diasDoMes);
 
                 itensQueMaisConsome.Add(itemQueMaisConsome);
             }
@@ -99,6 +115,26 @@ namespace GestorEnergetico.Services
             var itensFinais = itensQueMaisConsome.OrderByDescending(x => x.QuantidadeConsumoMensal).Take(5);
 
             return itensFinais.Distinct(new CompareNomeCategoria());
+        }
+
+        public DashboardDto preencherDashboard()
+        {
+            var dashboard = new DashboardDto();
+            var itens = _dbContext.Itens.Include(x => x.Categoria).ToList();
+            var parametrosDb = _dbContext.Parametros.FirstOrDefault();
+
+            var dataAtual = DateTime.Now;
+            var diasDoMes = DateTime.DaysInMonth(dataAtual.Year, dataAtual.Month);
+
+            foreach (var item in itens)
+            {
+                dashboard.DataAtual = DateTime.Now;
+                dashboard.TotalConsumoKwh += HelperCalculaTotalKwhDoProduto(item.ConsumoWatts, item.HorasUsoDiario, diasDoMes);
+            }
+
+            dashboard.TotalEmReais = (double)(dashboard.TotalConsumoKwh * parametrosDb.ValorKwh);
+
+            return dashboard;
         }
     }
 

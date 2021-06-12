@@ -23,7 +23,9 @@ namespace GestorEnergetico.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var dashboard = _reportService.preencherDashboard();
+
+            return View(dashboard);
         }
 
         public IActionResult Privacy()

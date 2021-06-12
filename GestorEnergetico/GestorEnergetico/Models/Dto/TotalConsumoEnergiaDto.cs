@@ -7,7 +7,7 @@ namespace GestorEnergetico.Models.Dto
 {
     public class TotalConsumoEnergiaDto
     {
-        public string nomeItem { get; set; }
+        public string NomeItem { get; set; }
         public decimal TotalWatts { get; set; }
         public double ValorEmReais { get; set; }
         public string IndicadorDeConsumo { get; set; }

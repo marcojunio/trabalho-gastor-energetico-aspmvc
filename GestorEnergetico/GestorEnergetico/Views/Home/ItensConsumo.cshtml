@@ -24,7 +24,7 @@
                     @Html.DisplayFor(modelItem => item.NomeItem)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.QuantidadeConsumoMensal)
+                    @String.Format("{0:N2}",item.QuantidadeConsumoMensal)
                 </td>
             </tr>
         }

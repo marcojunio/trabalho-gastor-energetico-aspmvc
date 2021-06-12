@@ -12,7 +12,7 @@
               Nome do Item
             </th>
             <th>
-              Total Watts / Mês
+                Total kWh / Mês
             </th>
             <th>
                Valor em Reais
@@ -27,13 +27,13 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.nomeItem)
+                    @Html.DisplayFor(modelItem => item.NomeItem)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TotalWatts)
+                    @String.Format("{0:N2}",item.TotalWatts)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ValorEmReais)
+                    R$@String.Format("{0:N2}",item.ValorEmReais)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.IndicadorDeConsumo)

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace GestorEnergetico.Models.Dto
 {
-    public class CategoriasConsumoDto
+    public class DashboardDto
     {
-        public string NomeCategoria { get; set; }
-        public decimal QuantidadeConsumoMensal { get; set; }
+        public decimal TotalConsumoKwh { get; set; }
+        public double TotalEmReais { get; set; }
+        public DateTime DataAtual { get; set; }
     }
 }
